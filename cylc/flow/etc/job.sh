@@ -25,21 +25,16 @@
 ###############################################################################
 # The main function for a cylc task job.
 cylc__job__main() {
-    # Export CYLC_ workflow and task environment variables
-    cylc__job__inst__cylc_env
     # Turn on xtrace in debug mode
     if "${CYLC_DEBUG:-false}"; then
         if [[ -n "${BASH:-}" ]]; then
             PS4='+[\D{%Y%m%dT%H%M%S%z}]\u@\h '
-            exec 19>>"${CYLC_WORKFLOW_RUN_DIR}/log/job/${CYLC_TASK_JOB}/job.xtrace"
+            exec 19>>"${CYLC_RUN_DIR}/${CYLC_WORKFLOW_ID}/log/job/${CYLC_TASK_JOB}/job.xtrace"
             export BASH_XTRACEFD=19
             >&2 echo "Sending DEBUG MODE xtrace to job.xtrace"
         fi
         set -x
     fi
-    # Init-Script
-    cylc__job__run_inst_func 'global_init_script'
-    cylc__job__run_inst_func 'init_script'
     # Start error and vacation traps
     typeset signal_name=
     for signal_name in ${CYLC_FAIL_SIGNALS}; do
@@ -70,6 +65,7 @@ cylc__job__main() {
     echo "User@Host: ${USER}@${host}"
     echo
     # Derived environment variables
+    export CYLC_WORKFLOW_RUN_DIR="${CYLC_RUN_DIR}/${CYLC_WORKFLOW_ID}"
     export CYLC_WORKFLOW_LOG_DIR="${CYLC_WORKFLOW_RUN_DIR}/log/workflow"
     export CYLC_WORKFLOW_SHARE_DIR="${CYLC_WORKFLOW_RUN_DIR}/share"
     export CYLC_WORKFLOW_WORK_DIR="${CYLC_WORKFLOW_RUN_DIR}/work"
