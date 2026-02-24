@@ -11,6 +11,20 @@ $ towncrier create <PR-number>.<break|feat|fix>.md --content "Short description"
 
 <!-- towncrier release notes start -->
 
+## __cylc-8.6.3 (Released 2026-02-24)__
+
+### 🔧 Fixes
+
+[#7121](https://github.com/cylc/cylc-flow/pull/7121) - Fixed `cylc broadcast` traceback when broadcasting an auto-upgraded deprecated setting.
+
+[#7147](https://github.com/cylc/cylc-flow/pull/7147) - Fixed a bug in the GUI where retry indicators would not appear on workflows in the sidebar.
+
+[#7172](https://github.com/cylc/cylc-flow/pull/7172) - Allow subfolders called log, share and work to be rsynced to remote platforms, only excluding top level folders of that name.
+
+[#7194](https://github.com/cylc/cylc-flow/pull/7194) - Fixed `cylc cat-log` taking 60 seconds to exit for remote logs, and incorrect exit code.
+
+[#7206](https://github.com/cylc/cylc-flow/pull/7206) - Fixes a memory leak in the data management that impacted some workflows.
+
 ## __cylc-8.6.2 (Released 2026-01-08)__
 
 ### 🔧 Fixes
